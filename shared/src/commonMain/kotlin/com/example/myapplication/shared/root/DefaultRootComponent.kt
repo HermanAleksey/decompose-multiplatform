@@ -36,13 +36,11 @@ class DefaultRootComponent(
             is Config.Main -> Child.Main(mainComponent(childComponentContext))
         }
 
-    private val loginNetworkComponent = LoginNetworkComponent()
-
     private fun loginComponent(componentContext: ComponentContext): LoginComponent =
         DefaultLoginComponent(
             componentContext = componentContext,
             navigateToMainPage = { navigation.push(Config.Main) },
-            loginNetworkComponent = loginNetworkComponent
+//            loginNetworkComponent = loginNetworkComponent
         )
 
     private fun mainComponent(componentContext: ComponentContext): MainComponent =
