@@ -40,6 +40,18 @@ kotlin {
             dependencies {
                 api(libs.decompose.decompose)
                 api(libs.essenty.lifecycle)
+
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+
+                androidMain.dependencies {
+                    implementation(libs.ktor.client.android)
+                }
+                iosMain.dependencies {
+                    implementation(libs.ktor.client.darwin)
+                }
             }
         }
         val commonTest by getting {
