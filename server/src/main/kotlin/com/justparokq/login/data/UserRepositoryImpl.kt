@@ -1,8 +1,8 @@
-package com.justparokq.data
+package com.justparokq.login.data
 
-import com.justparokq.model.UserModel
+import com.justparokq.login.model.UserModel
 
-class UserRepositoryImpl : UserRepository {
+internal class UserRepositoryImpl : UserRepository {
 
     private val tempStorage = hashMapOf<String, UserModel>(
         "user" to UserModel("user", "pass")

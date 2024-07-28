@@ -1,8 +1,8 @@
-package com.justparokq.data
+package com.justparokq.login.data
 
-import com.justparokq.model.UserModel
+import com.justparokq.login.model.UserModel
 
-interface UserRepository {
+internal interface UserRepository {
 
     fun save(user: UserModel): Boolean
 
