@@ -12,7 +12,7 @@ application {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(project(":models"))
     implementation(libs.logback)
 
     implementation(libs.ktor.server.core)

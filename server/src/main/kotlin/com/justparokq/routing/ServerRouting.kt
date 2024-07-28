@@ -5,6 +5,8 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.justparokq.login.data.LoginRequestMapper
 import com.justparokq.login.data.UserRepositoryImpl
+import com.justparokq.models.login.LoginRequest
+import com.justparokq.models.login.LoginResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
