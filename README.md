@@ -107,14 +107,6 @@ from the run configurations and run the app.
 Alternatively you can open `app-ios-compose/app-ios-compose.xcodeproj` in XCode and launch the project
 from there.
 
-### For iOS (Swift)
-
-If you have installed the Kotlin Multiplatform Mobile plugin you can simply select `app-ios-swift`
-from the run configurations and run the app.
-
-Alternatively you can open `app-ios-swift/app-ios-swift.xcodeproj` in XCode and launch the project
-from there.
-
 ## Further Reading
 
 We encourage you to explore Decompose's features further and try adding them into your project:
