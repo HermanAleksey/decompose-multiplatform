@@ -1,4 +1,4 @@
-package com.example.myapplication.shared.login.models
+package com.justparokq.models
 
 sealed interface Result<out T> {
 

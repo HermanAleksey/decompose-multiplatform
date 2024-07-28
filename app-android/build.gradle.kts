@@ -44,6 +44,6 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation(project(":compose-ui"))
-    implementation(libs.androidx.activity.activityCompose)
+    implementation(libs.androidx.activity.compose)
     implementation(compose.foundation)
 }

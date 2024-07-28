@@ -4,15 +4,15 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import com.example.myapplication.shared.login.data.network.LoginNetworkComponent
+import com.example.myapplication.shared.login.presentation.DefaultLoginComponent
+import com.example.myapplication.shared.login.presentation.LoginComponent
 import com.example.myapplication.shared.main.DefaultMainComponent
 import com.example.myapplication.shared.main.MainComponent
 import com.example.myapplication.shared.root.RootComponent.Child
-import com.example.myapplication.shared.welcome.DefaultWelcomeComponent
-import com.example.myapplication.shared.welcome.WelcomeComponent
 import kotlinx.serialization.Serializable
 
 class DefaultRootComponent(
@@ -25,27 +25,30 @@ class DefaultRootComponent(
         childStack(
             source = navigation,
             serializer = Config.serializer(),
-            initialConfiguration = Config.Main,
+            initialConfiguration = Config.Login,
             handleBackButton = true,
             childFactory = ::child,
         )
 
     private fun child(config: Config, childComponentContext: ComponentContext): Child =
         when (config) {
+            is Config.Login -> Child.Login(loginComponent(childComponentContext))
             is Config.Main -> Child.Main(mainComponent(childComponentContext))
-            is Config.Welcome -> Child.Welcome(welcomeComponent(childComponentContext))
         }
+
+    private val loginNetworkComponent = LoginNetworkComponent()
+
+    private fun loginComponent(componentContext: ComponentContext): LoginComponent =
+        DefaultLoginComponent(
+            componentContext = componentContext,
+            navigateToMainPage = { navigation.push(Config.Main) },
+            loginNetworkComponent = loginNetworkComponent
+        )
 
     private fun mainComponent(componentContext: ComponentContext): MainComponent =
         DefaultMainComponent(
             componentContext = componentContext,
-            onShowWelcome = { navigation.push(Config.Welcome) },
-        )
-
-    private fun welcomeComponent(componentContext: ComponentContext): WelcomeComponent =
-        DefaultWelcomeComponent(
-            componentContext = componentContext,
-            onFinished = navigation::pop,
+            onShowWelcome = { navigation.push(Config.Login) },
         )
 
     override fun onBackClicked(toIndex: Int) {
@@ -54,10 +57,11 @@ class DefaultRootComponent(
 
     @Serializable
     private sealed interface Config {
-        @Serializable
-        data object Main : Config
 
         @Serializable
-        data object Welcome : Config
+        data object Login : Config
+
+        @Serializable
+        data object Main : Config
     }
 }

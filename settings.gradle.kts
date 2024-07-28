@@ -1,4 +1,7 @@
 @file:Suppress("UnstableApiUsage")
+
+include(":models")
+
 rootProject.name = "KmpProject"
 
 pluginManagement {
@@ -17,6 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "decompose-template"
+include(":models")
 include(":shared")
 include(":server")
 include(":compose-ui")

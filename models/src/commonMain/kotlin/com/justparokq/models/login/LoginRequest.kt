@@ -1,4 +1,4 @@
-package com.example.myapplication.shared.login.models.login
+package com.justparokq.models.login
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

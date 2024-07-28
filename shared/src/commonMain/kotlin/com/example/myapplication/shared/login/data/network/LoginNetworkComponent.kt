@@ -1,8 +1,8 @@
-package com.example.myapplication.shared.login.component
+package com.example.myapplication.shared.login.data.network
 
-import com.example.myapplication.shared.login.models.Result
-import com.example.myapplication.shared.login.models.login.LoginRequest
-import com.example.myapplication.shared.login.models.login.LoginResponse
+import com.justparokq.models.Result
+import com.justparokq.models.login.LoginRequest
+import com.justparokq.models.login.LoginResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 
-class LoginComponent {
+internal class LoginNetworkComponent {
 
     private val httpClient = HttpClient {
         install(ContentNegotiation) {
@@ -53,6 +53,5 @@ class LoginComponent {
                 emit(Result.Error(errorMessage = e.message ?: "Unknown error"))
             }
         }
-
     }
 }
