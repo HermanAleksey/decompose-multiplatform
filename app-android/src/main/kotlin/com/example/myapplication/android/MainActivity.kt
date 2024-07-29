@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import com.arkivanov.decompose.defaultComponentContext
 import com.example.myapplication.root.RootContent
 import com.example.myapplication.shared.root.DefaultRootComponent
+import com.example.myapplication.theme.AndroidAppTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -15,7 +16,9 @@ class MainActivity : ComponentActivity() {
         val root = DefaultRootComponent(componentContext = defaultComponentContext())
 
         setContent {
-            RootContent(component = root)
+            AndroidAppTheme {
+                RootContent(component = root)
+            }
         }
     }
 }

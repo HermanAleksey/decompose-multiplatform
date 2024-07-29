@@ -8,6 +8,7 @@ import com.arkivanov.decompose.extensions.compose.lifecycle.LifecycleController
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.example.myapplication.root.RootContent
 import com.example.myapplication.shared.root.DefaultRootComponent
+import com.example.myapplication.theme.AppTheme
 
 fun main() {
 
@@ -29,7 +30,9 @@ fun main() {
             state = windowState,
             title = "My Application"
         ) {
-            RootContent(root)
+            AppTheme {
+                RootContent(root)
+            }
         }
     }
 }

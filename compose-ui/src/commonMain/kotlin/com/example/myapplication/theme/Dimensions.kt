@@ -1,5 +1,9 @@
-package theme
+package com.example.myapplication.theme
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -31,4 +35,17 @@ val normalDimensions: Dimensions = object : Dimensions {
         get() = 56.dp
     override val minButtonWidth: Dp
         get() = 120.dp
+}
+
+private val LocalAppDimens = staticCompositionLocalOf {
+    normalDimensions
+}
+
+@Composable
+fun ProvideDimens(
+    dimensions: Dimensions,
+    content: @Composable () -> Unit,
+) {
+    val dimensionSet = remember { dimensions }
+    CompositionLocalProvider(LocalAppDimens provides dimensionSet, content = content)
 }

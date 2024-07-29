@@ -16,24 +16,21 @@ import com.example.myapplication.login.LoginContent
 import com.example.myapplication.main.MainContent
 import com.example.myapplication.shared.root.RootComponent
 import com.example.myapplication.shared.root.RootComponent.Child
-import theme.AppTheme
 
 @Composable
 fun RootContent(
     component: RootComponent,
     modifier: Modifier = Modifier,
 ) {
-    AppTheme {
-        Surface(modifier = modifier.fillMaxSize().windowInsetsPadding(WindowInsets.systemBars)) {
-            Children(
-                stack = component.stack,
-                modifier = Modifier.fillMaxSize(),
-                animation = stackAnimation(fade() + scale())
-            ) {
-                when (val instance = it.instance) {
-                    is Child.Login -> LoginContent(component = instance.component)
-                    is Child.Main -> MainContent(component = instance.component)
-                }
+    Surface(modifier = modifier.fillMaxSize().windowInsetsPadding(WindowInsets.systemBars)) {
+        Children(
+            stack = component.stack,
+            modifier = Modifier.fillMaxSize(),
+            animation = stackAnimation(fade() + scale())
+        ) {
+            when (val instance = it.instance) {
+                is Child.Login -> LoginContent(component = instance.component)
+                is Child.Main -> MainContent(component = instance.component)
             }
         }
     }
