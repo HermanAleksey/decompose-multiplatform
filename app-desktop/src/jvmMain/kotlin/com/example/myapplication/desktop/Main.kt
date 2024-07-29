@@ -28,7 +28,8 @@ fun main() {
         Window(
             onCloseRequest = ::exitApplication,
             state = windowState,
-            title = "My Application"
+            title = "My Application",
+            resizable = false,
         ) {
             AppTheme {
                 RootContent(root)

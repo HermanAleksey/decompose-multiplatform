@@ -13,6 +13,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
@@ -34,7 +35,8 @@ internal class LoginNetworkComponent {
     ): Flow<Result<LoginResponse>> {
         return flow {
             emit(Result.Loading(true))
-
+            // todo remove
+            delay(1000)
             try {
                 val result = httpClient.request("http://10.0.2.2:8080/login") {
                     method = HttpMethod.Post

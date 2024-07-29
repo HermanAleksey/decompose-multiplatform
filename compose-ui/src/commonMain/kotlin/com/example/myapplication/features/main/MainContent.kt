@@ -1,4 +1,4 @@
-package com.example.myapplication.main
+package com.example.myapplication.features.main
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box

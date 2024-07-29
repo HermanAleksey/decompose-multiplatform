@@ -1,5 +1,6 @@
-package com.example.myapplication.login.composables
+package com.example.myapplication.features.login.composables
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,6 +10,8 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -28,16 +31,41 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.sp
+import com.example.myapplication.theme.backgroundDark
+
+interface TextInputContract {
+    val value: String
+    val onValueChanged: (newValue: String) -> Unit
+    val label: String
+    val isEnabled: Boolean
+    val isError: Boolean
+    val errorText: String?
+}
+
+class PresetTextInputContract(
+    override val value: String,
+    override val label: String,
+    override val onValueChanged: (String) -> Unit,
+    override val isEnabled: Boolean = true,
+    override val isError: Boolean = false,
+    override val errorText: String? = null,
+
+    focusRequester: FocusRequester? = null,
+    imeAction: ImeAction = ImeAction.Done,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    testTag: String = "",
+    onKeyboardActions: () -> Unit,
+) : TextInputContract
 
 @Composable
 internal fun LoginInputField(
-    textFieldValue: String,
+    value: String,
     label: String,
     onValueChanged: (String) -> Unit,
-    isError: Boolean,
-    errorValue: String?,
     isEnabled: Boolean = true,
+    isError: Boolean = false,
+    errorText: String? = null,
+
     focusRequester: FocusRequester? = null,
     imeAction: ImeAction = ImeAction.Done,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -48,28 +76,23 @@ internal fun LoginInputField(
         keyboardType == KeyboardType.Password
     }
     var passwordVisible by rememberSaveable { mutableStateOf(!isPasswordField) }
-    var labelFontSize by remember {
-        mutableStateOf(18)
+    val largeLabel = MaterialTheme.typography.labelLarge
+    val mediumLabel = MaterialTheme.typography.labelSmall
+    var labelFont by remember {
+        mutableStateOf(largeLabel)
     }
-    val color = MaterialTheme.colorScheme.scrim
-    var labelTextColor by remember {
-        mutableStateOf(color)
-    }
-    TextField(
+    OutlinedTextField(
         enabled = isEnabled,
-        value = textFieldValue,
+        value = value,
         onValueChange = {
             onValueChanged(it)
         },
         isError = isError,
-        textStyle = MaterialTheme.typography.headlineSmall,
+        textStyle = MaterialTheme.typography.bodyLarge,
         label = {
             Text(
                 text = label,
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontSize = labelFontSize.sp,
-                    color = labelTextColor
-                ),
+                style = labelFont
             )
         },
         keyboardOptions = KeyboardOptions(
@@ -85,11 +108,11 @@ internal fun LoginInputField(
             }
         ),
         singleLine = true,
-        colors = TextFieldDefaults.colors(),
+        colors = OutlinedTextFieldDefaults.colors(),
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
         trailingIcon = {
-            if (!isPasswordField) return@TextField
+            if (!isPasswordField) return@OutlinedTextField
 
             val icon = if (passwordVisible)
                 Icons.Filled.Visibility
@@ -102,7 +125,7 @@ internal fun LoginInputField(
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(
                     imageVector = icon,
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = description
                 )
             }
@@ -111,19 +134,17 @@ internal fun LoginInputField(
             .fillMaxWidth()
             .focusRequester(focusRequester ?: FocusRequester())
             .onFocusChanged { focusState ->
-                if (textFieldValue.isBlank() && !focusState.isFocused) {
-                    labelTextColor = Color.Gray
-                    labelFontSize = 22
+                labelFont = if (value.isBlank() && !focusState.isFocused) {
+                    largeLabel
                 } else {
-                    labelTextColor = Color.White
-                    labelFontSize = 15
+                    mediumLabel
                 }
             }
             .testTag(testTag)
     )
-    if (errorValue != null) {
+    errorText?.let { text ->
         Text(
-            text = errorValue,
+            text = text,
             color = MaterialTheme.colorScheme.error,
         )
     }

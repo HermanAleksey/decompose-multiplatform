@@ -1,6 +1,8 @@
-package com.example.myapplication.login.composables
+package com.example.myapplication.features.login.composables
 
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,8 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -25,53 +30,56 @@ fun LoginCard(
     onLoginButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val focusManager = LocalFocusManager.current
+    val usernameFocusRequester = FocusRequester()
+    val passwordFocusRequester = FocusRequester()
+
     ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier
-                .padding(
-                    horizontal = 32.dp,
-                    vertical = 32.dp
-                )
+                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .padding(24.dp)
         ) {
             LoginInputField(
-                textFieldValue = usernameTextValue,
-                label = "Login",
+                value = usernameTextValue,
+                label = "Username",
                 onValueChanged = { str -> updateUsername(str) },
                 isError = false,
-                errorValue = null,
-                isEnabled = true,
-                focusRequester = null,
+                errorText = null,
+                isEnabled = !isLoading,
+                focusRequester = usernameFocusRequester,
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text,
-                testTag = "",
-                onKeyboardActions = {},
+                testTag = "username text field",
+                onKeyboardActions = { passwordFocusRequester.requestFocus() },
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             LoginInputField(
-                textFieldValue = passwordTextValue,
+                value = passwordTextValue,
                 label = "Password",
                 onValueChanged = { str -> updatePassword(str) },
                 isError = false,
-                errorValue = null,
-                isEnabled = true,
-                focusRequester = null,
+                errorText = null,
+                isEnabled = !isLoading,
+                focusRequester = passwordFocusRequester,
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password,
-                testTag = "",
-                onKeyboardActions = {},
+                testTag = "password text field",
+                onKeyboardActions = { focusManager.clearFocus() },
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 LoginMainButton(
-                    modifier = Modifier,
-                    text = "Login",
-                    onClick = { onLoginButtonClicked() }
+                    text = "Sign in",
+                    onClick = { onLoginButtonClicked() },
+                    isLoading = isLoading,
+                    isClickable = !isLoading,
+                    modifier = Modifier.animateContentSize()
                 )
             }
         }
