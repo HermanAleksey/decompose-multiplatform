@@ -2,8 +2,6 @@
 
 include(":models")
 
-rootProject.name = "KmpProject"
-
 pluginManagement {
     repositories {
         google()
@@ -19,7 +17,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "decompose-template"
+rootProject.name = "home-ftp"
 include(":models")
 include(":shared")
 include(":server")

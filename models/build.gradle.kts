@@ -48,7 +48,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.myapplication.models"
+    namespace = "com.justparokq.homeftp.models"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

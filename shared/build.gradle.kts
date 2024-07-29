@@ -67,7 +67,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.myapplication.shared"
+    namespace = "com.justparokq.homefpt.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

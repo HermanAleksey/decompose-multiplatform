@@ -28,7 +28,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.example.myapplication.desktop.MainKt"
+        mainClass = "com.justparokq.homeftp.desktop.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
