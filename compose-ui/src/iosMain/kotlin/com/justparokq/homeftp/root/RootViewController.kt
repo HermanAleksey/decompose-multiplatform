@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.justparokq.homeftp.shared.root.RootComponent
 import com.justparokq.homeftp.theme.AppTheme
-import com.justparokq.homeftp.root.RootContent
 import platform.UIKit.UIViewController
 
 fun rootViewController(root: RootComponent): UIViewController =

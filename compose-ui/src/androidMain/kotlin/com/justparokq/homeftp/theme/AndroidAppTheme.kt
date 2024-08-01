@@ -7,9 +7,6 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.justparokq.homeftp.theme.baselineTypography
-import com.justparokq.homeftp.theme.darkScheme
-import com.justparokq.homeftp.theme.lightScheme
 
 @Composable
 fun AndroidAppTheme(

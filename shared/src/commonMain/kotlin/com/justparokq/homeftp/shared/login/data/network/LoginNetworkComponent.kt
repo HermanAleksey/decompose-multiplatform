@@ -1,8 +1,8 @@
 package com.justparokq.homeftp.shared.login.data.network
 
-import com.justparokq.models.Result
-import com.justparokq.models.login.LoginRequest
-import com.justparokq.models.login.LoginResponse
+import com.justparokq.homeftp.models.Result
+import com.justparokq.homeftp.models.login.LoginRequest
+import com.justparokq.homeftp.models.login.LoginResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

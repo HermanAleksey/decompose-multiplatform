@@ -7,7 +7,6 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import com.justparokq.homeftp.shared.login.data.network.LoginNetworkComponent
 import com.justparokq.homeftp.shared.login.presentation.DefaultLoginComponent
 import com.justparokq.homeftp.shared.login.presentation.LoginComponent
 import com.justparokq.homeftp.shared.main.DefaultMainComponent

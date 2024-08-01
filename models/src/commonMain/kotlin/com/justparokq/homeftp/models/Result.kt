@@ -1,9 +1,9 @@
-package com.justparokq.models
+package com.justparokq.homeftp.models
 
 sealed interface Result<out T> {
 
     data class Loading<T>(
-        val loading: Boolean
+        val loading: Boolean,
     ) : Result<T>
 
     data class Success<T>(

@@ -7,8 +7,8 @@ import com.arkivanov.decompose.value.update
 import com.justparokq.homeftp.shared.componentCoroutineScope
 import com.justparokq.homeftp.shared.login.data.network.LoginNetworkComponent
 import com.justparokq.homeftp.shared.login.model.LoginScreenModel
-import com.justparokq.models.Result
-import com.justparokq.models.login.LoginRequest
+import com.justparokq.homeftp.models.Result
+import com.justparokq.homeftp.models.login.LoginRequest
 import kotlinx.coroutines.launch
 
 internal class DefaultLoginComponent(

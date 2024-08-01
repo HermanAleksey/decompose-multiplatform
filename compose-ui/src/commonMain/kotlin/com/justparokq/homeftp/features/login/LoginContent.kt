@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -20,7 +18,6 @@ import com.justparokq.homeftp.features.login.composables.LoginCard
 import com.justparokq.homeftp.shared.login.presentation.LoginComponent
 import com.justparokq.homeftp.shared.login.presentation.PreviewLoginComponent
 import com.justparokq.homeftp.theme.AppTheme
-import kotlin.math.min
 
 @Composable
 internal fun LoginContent(
