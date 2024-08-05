@@ -1,30 +1,8 @@
-package com.justparokq.homeftp.shared.main
+package com.justparokq.homeftp.shared.ftp.presentation
 
+import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
 
-// todo remove from compose-ui module
-sealed interface FileSystemObject {
-
-    data class Directory(
-        val name: String,
-        val content: List<FileSystemObject>?,
-    ) : FileSystemObject
-
-    data class File(
-        val name: String,
-        val content: Any, // todo update
-    ) : FileSystemObject
-}
-
-
-// todo rename feature screen
-data class FtpClientScreenModel(
-    val currentPath: String,
-    val fileTree: FileSystemObject.Directory,
-    val isLoading: Boolean,
-    val showHierarchyView: Boolean,
-)
-
-interface MainComponent {
+interface FtpExplorerComponent {
 
     /**
      * Navigates to directory by path

@@ -9,8 +9,8 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.justparokq.homeftp.shared.login.presentation.DefaultLoginComponent
 import com.justparokq.homeftp.shared.login.presentation.LoginComponent
-import com.justparokq.homeftp.shared.main.DefaultMainComponent
-import com.justparokq.homeftp.shared.main.MainComponent
+import com.justparokq.homeftp.shared.ftp.presentation.DefaultFtpExplorerComponent
+import com.justparokq.homeftp.shared.ftp.presentation.FtpExplorerComponent
 import com.justparokq.homeftp.shared.root.RootComponent.Child
 import kotlinx.serialization.Serializable
 
@@ -42,8 +42,8 @@ class DefaultRootComponent(
 //            loginNetworkComponent = loginNetworkComponent
         )
 
-    private fun mainComponent(componentContext: ComponentContext): MainComponent =
-        DefaultMainComponent(
+    private fun mainComponent(componentContext: ComponentContext): FtpExplorerComponent =
+        DefaultFtpExplorerComponent(
             componentContext = componentContext,
             onShowWelcome = { navigation.push(Config.Login) },
         )

@@ -14,13 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.justparokq.homeftp.features.main.composables.FileSystemHierarchy
 import com.justparokq.homeftp.features.main.model.FileSystemObject
-import com.justparokq.homeftp.shared.main.MainComponent
-import com.justparokq.homeftp.shared.main.PreviewMainComponent
+import com.justparokq.homeftp.shared.ftp.presentation.FtpExplorerComponent
+import com.justparokq.homeftp.shared.ftp.presentation.PreviewFtpExplorerComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainContent(
-    component: MainComponent,
+    component: FtpExplorerComponent,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -79,5 +79,5 @@ internal fun MainContent(
 @Preview
 @Composable
 fun MainPreview() {
-    MainContent(PreviewMainComponent)
+    MainContent(PreviewFtpExplorerComponent)
 }
