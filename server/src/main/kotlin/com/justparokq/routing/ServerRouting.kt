@@ -31,7 +31,6 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
-import java.io.File
 import java.security.KeyFactory
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -133,22 +132,10 @@ private fun Routing.addUnauthorizedRoutes(
         }
     }
 
+    // todo move to auth zone + another file
     val pathToRootDirectory = "./server/testStorageDirectory/"
     val communicator = FileSystemCommunicator(pathToRootDirectory)
     val mapper = FileResponseMapper(pathToRootDirectory)
-    get("/image") {
-        val path = call.parameters["path"]
-        if (path == null) {
-            call.respond(HttpStatusCode.NotFound, "Empty path param")
-        } else {
-            val file = communicator.getFile(path)
-            if (file == null) {
-                call.respond(HttpStatusCode.NotFound, "No such a file, path = $path")
-            } else {
-                call.respondFile(file)
-            }
-        }
-    }
     get("/image") {
         val path = call.parameters["path"]
         when {
@@ -164,15 +151,11 @@ private fun Routing.addUnauthorizedRoutes(
         }
     }
     get("/directory") {
-        val path = call.parameters["path"]
-        if (path == null) {
-            call.respond(HttpStatusCode.NotFound, "Empty path param")
-        } else {
-            val files = communicator.getDirectoryContent(path) ?: listOf()
-            val dtos = mapper.map(files)
+        val path = call.parameters["path"] ?: ""
+        val files = communicator.getDirectoryContent(path) ?: listOf()
+        val dtos = mapper.map(files)
 
-            call.respond(dtos)
-        }
+        call.respond(dtos)
     }
 }
 
