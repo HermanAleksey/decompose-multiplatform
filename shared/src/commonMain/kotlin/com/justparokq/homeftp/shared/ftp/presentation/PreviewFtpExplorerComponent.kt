@@ -1,5 +1,7 @@
 package com.justparokq.homeftp.shared.ftp.presentation
 
+import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
+
 object PreviewFtpExplorerComponent : FtpExplorerComponent {
     override fun onDirectoryClicked(dirPath: List<String>) {}
 

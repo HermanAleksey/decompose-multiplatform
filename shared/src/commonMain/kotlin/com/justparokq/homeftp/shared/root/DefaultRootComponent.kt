@@ -45,7 +45,7 @@ class DefaultRootComponent(
     private fun mainComponent(componentContext: ComponentContext): FtpExplorerComponent =
         DefaultFtpExplorerComponent(
             componentContext = componentContext,
-            onShowWelcome = { navigation.push(Config.Login) },
+//            onShowWelcome = { navigation.push(Config.Login) },
         )
 
     override fun onBackClicked(toIndex: Int) {

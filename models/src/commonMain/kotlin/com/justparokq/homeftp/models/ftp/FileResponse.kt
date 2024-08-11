@@ -10,5 +10,5 @@ data class FileResponse(
     @SerialName("name")
     val name: String,
     @SerialName("isFolder")
-    val isFolder: Boolean,
+    val isDirectory: Boolean,
 )

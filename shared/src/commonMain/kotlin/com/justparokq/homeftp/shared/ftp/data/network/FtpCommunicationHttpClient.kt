@@ -5,7 +5,7 @@ import com.justparokq.homeftp.models.ftp.FileResponse
 val file = FileResponse(
     uri = "src/lesha/hello",
     name = "text.txt",
-    isFolder = false,
+    isDirectory = false,
 )
 
 interface FtpCommunicationHttpClient {

@@ -3,10 +3,12 @@ package com.justparokq.routing
 import com.auth0.jwk.JwkProvider
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.justparokq.login.data.LoginRequestMapper
-import com.justparokq.login.data.UserRepositoryImpl
+import com.justparokq.ftp.mapper.FileResponseMapper
+import com.justparokq.ftp.utils.FileSystemCommunicator
 import com.justparokq.homeftp.models.login.LoginRequest
 import com.justparokq.homeftp.models.login.LoginResponse
+import com.justparokq.login.data.LoginRequestMapper
+import com.justparokq.login.data.UserRepositoryImpl
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -21,6 +23,7 @@ import io.ktor.server.http.content.resource
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondFile
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.Routing
@@ -28,6 +31,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
+import java.io.File
 import java.security.KeyFactory
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -126,6 +130,48 @@ private fun Routing.addUnauthorizedRoutes(
             )
         } else {
             call.respond(HttpStatusCode.Unauthorized)
+        }
+    }
+
+    val pathToRootDirectory = "./server/testStorageDirectory/"
+    val communicator = FileSystemCommunicator(pathToRootDirectory)
+    val mapper = FileResponseMapper(pathToRootDirectory)
+    get("/image") {
+        val path = call.parameters["path"]
+        if (path == null) {
+            call.respond(HttpStatusCode.NotFound, "Empty path param")
+        } else {
+            val file = communicator.getFile(path)
+            if (file == null) {
+                call.respond(HttpStatusCode.NotFound, "No such a file, path = $path")
+            } else {
+                call.respondFile(file)
+            }
+        }
+    }
+    get("/image") {
+        val path = call.parameters["path"]
+        when {
+            path.isNullOrEmpty() -> call.respond(HttpStatusCode.BadRequest, "Empty path param")
+            else -> {
+                val file = communicator.getFile(path)
+                if (file == null) {
+                    call.respond(HttpStatusCode.NotFound, "File not found")
+                } else {
+                    call.respondFile(file)
+                }
+            }
+        }
+    }
+    get("/directory") {
+        val path = call.parameters["path"]
+        if (path == null) {
+            call.respond(HttpStatusCode.NotFound, "Empty path param")
+        } else {
+            val files = communicator.getDirectoryContent(path) ?: listOf()
+            val dtos = mapper.map(files)
+
+            call.respond(dtos)
         }
     }
 }
