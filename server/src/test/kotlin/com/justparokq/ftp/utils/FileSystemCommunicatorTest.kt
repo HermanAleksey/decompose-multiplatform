@@ -7,7 +7,8 @@ import java.io.File
 
 class FileSystemCommunicatorTest {
 
-    private val defaultCommunicator = FileSystemCommunicator()
+    private val pathProcessor = PathProcessor("./testStorageDirectory/")
+    private val defaultCommunicator = FileSystemCommunicator(pathProcessor)
 
     @Test
     fun `test getDirectoryContent with invalid directory`() {

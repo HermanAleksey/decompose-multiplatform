@@ -5,6 +5,9 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.justparokq.ftp.mapper.FileResponseMapper
 import com.justparokq.ftp.utils.FileSystemCommunicator
+import com.justparokq.ftp.utils.PathConstants.PHOTO_TYPE_PNG
+import com.justparokq.ftp.utils.PathProcessor
+import com.justparokq.ftp.utils.PhotoProcessor
 import com.justparokq.homeftp.models.login.LoginRequest
 import com.justparokq.homeftp.models.login.LoginResponse
 import com.justparokq.login.data.LoginRequestMapper
@@ -133,19 +136,30 @@ private fun Routing.addUnauthorizedRoutes(
     }
 
     // todo move to auth zone + another file
-    val pathToRootDirectory = "./server/testStorageDirectory/"
-    val communicator = FileSystemCommunicator(pathToRootDirectory)
-    val mapper = FileResponseMapper(pathToRootDirectory)
+    val pathProcessor = PathProcessor("./server/testStorageDirectory/")
+    val communicator = FileSystemCommunicator(pathProcessor)
+    val mapper = FileResponseMapper(pathProcessor)
+    val photoProcessor = PhotoProcessor(pathProcessor)
     get("/image") {
         val path = call.parameters["path"]
+        val preview = call.parameters["preview"].toBoolean()
+
         when {
             path.isNullOrEmpty() -> call.respond(HttpStatusCode.BadRequest, "Empty path param")
             else -> {
                 val file = communicator.getFile(path)
-                if (file == null) {
-                    call.respond(HttpStatusCode.NotFound, "File not found")
+
+                if (file == null || file.extension != PHOTO_TYPE_PNG) {
+                    call.respond(
+                        HttpStatusCode.NotFound,
+                        "File not found or file extension is not supported"
+                    )
                 } else {
-                    call.respondFile(file)
+                    // todo rework
+                    val fileToSend = if (preview) {
+                        photoProcessor.getPreviewForPhoto(file)
+                    } else file
+                    call.respondFile(fileToSend)
                 }
             }
         }

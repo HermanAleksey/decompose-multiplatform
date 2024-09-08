@@ -1,5 +1,6 @@
 package com.justparokq.ftp.mapper
 
+import com.justparokq.ftp.utils.PathProcessor
 import com.justparokq.homeftp.models.ftp.FileResponse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -9,8 +10,8 @@ import java.io.File
 
 internal class FileResponseMapperTest {
 
-    private val rootPath = "./testStorageDirectory/"
-    private val mapper = FileResponseMapper(rootPath)
+    private val pathProcessor = PathProcessor("./testStorageDirectory/")
+    private val mapper = FileResponseMapper(pathProcessor)
 
     @Test
     fun `test map with empty list`() {
