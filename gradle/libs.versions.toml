@@ -25,6 +25,7 @@ kotlinxCoroutinesCore = "1.8.1"
 ktorClientDarwin = "2.3.11"
 ktorServerAuth = "2.0.2"
 ktorVersion = "2.3.7"
+ktorHttp = "1.1.5"
 logback = "1.5.6"
 lifecycleViewmodelAndroid = "2.8.3"
 
@@ -63,6 +64,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientDarwin" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
+ktor-http = { module = "io.ktor:ktor-http", version.ref = "ktorHttp" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktorClientDarwin" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorClientDarwin" }

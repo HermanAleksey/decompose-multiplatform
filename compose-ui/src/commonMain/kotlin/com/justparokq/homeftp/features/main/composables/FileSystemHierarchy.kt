@@ -4,7 +4,7 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.justparokq.homeftp.features.main.model.FileSystemObject
+import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
 import com.justparokq.homeftp.theme.AppTheme
 
 @Composable

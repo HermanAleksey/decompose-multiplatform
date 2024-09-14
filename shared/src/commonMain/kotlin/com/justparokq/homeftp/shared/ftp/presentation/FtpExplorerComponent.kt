@@ -1,8 +1,12 @@
 package com.justparokq.homeftp.shared.ftp.presentation
 
+import com.arkivanov.decompose.value.Value
 import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
+import com.justparokq.homeftp.shared.ftp.model.FtpExplorerScreenModel
 
 interface FtpExplorerComponent {
+
+    val state: Value<FtpExplorerScreenModel>
 
     /**
      * Navigates to directory by path

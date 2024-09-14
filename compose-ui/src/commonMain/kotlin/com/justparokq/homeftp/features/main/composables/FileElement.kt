@@ -6,7 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.justparokq.homeftp.features.main.model.FileSystemObject
+import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
 import com.justparokq.homeftp.theme.AppTheme
 
 @Composable

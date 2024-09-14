@@ -12,8 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.justparokq.homeftp.features.main.composables.FileSystemHierarchy
-import com.justparokq.homeftp.features.main.model.FileSystemObject
+import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
 import com.justparokq.homeftp.shared.ftp.presentation.FtpExplorerComponent
 import com.justparokq.homeftp.shared.ftp.presentation.PreviewFtpExplorerComponent
 
@@ -23,6 +24,7 @@ internal fun MainContent(
     component: FtpExplorerComponent,
     modifier: Modifier = Modifier,
 ) {
+    val state = component.state.subscribeAsState()
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
@@ -36,39 +38,8 @@ internal fun MainContent(
             modifier = Modifier.padding(paddings)
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            val listDirectory = FileSystemObject.Directory(
-                "/src",
-                content = listOf(
-                    FileSystemObject.Directory(
-                        name = "/directory one",
-                        content = listOf(
-                            FileSystemObject.File(
-                                name = "file 1.txt",
-                                content = Unit
-                            )
-                        ),
-                    ),
-                    FileSystemObject.Directory(
-                        name = "/directory two",
-                        content = listOf(
-                            FileSystemObject.File(
-                                name = "file 2-1.txt",
-                                content = Unit
-                            ),
-                            FileSystemObject.File(
-                                name = "file 2-2.txt",
-                                content = Unit
-                            )
-                        ),
-                    ),
-                    FileSystemObject.File(
-                        name = "text3.txt",
-                        content = Unit
-                    )
-                )
-            )
             FileSystemHierarchy(
-                fileHierarchy = listDirectory,
+                fileHierarchy = state.value.fileTree,
                 onFileClicked = {},
                 modifier = Modifier.fillMaxSize()
             )

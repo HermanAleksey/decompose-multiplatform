@@ -22,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.justparokq.homeftp.features.main.model.FileSystemObject
+import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
 import com.justparokq.homeftp.theme.AppTheme
 
 
