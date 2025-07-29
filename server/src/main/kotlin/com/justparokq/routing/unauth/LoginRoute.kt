@@ -13,7 +13,7 @@ import io.ktor.server.routing.RoutingContext
 internal const val TEST_TOKEN_EXPIRATION_TIME = 1 * 60 * 60 * 100L
 
 // 30 minutes
-internal const val PROD_TOKEN_EXPIRATION_TIME = 30 * 60 * 100L
+internal const val PROD_TOKEN_EXPIRATION_TIME = 2 * 60 * 100L
 
 internal const val RSA_ALGORITHM = "RSA"
 

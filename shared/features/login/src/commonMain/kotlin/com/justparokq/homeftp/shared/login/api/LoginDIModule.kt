@@ -1,6 +1,5 @@
 package com.justparokq.homeftp.shared.login.api
 
-import com.justparokq.homefpt.shared.core.network.di.networkCoreModule
 import com.justparokq.homeftp.shared.core.setting_store.NetworkStore
 import com.justparokq.homeftp.shared.login.network.LoginNetworkComponent
 import com.justparokq.homeftp.shared.login.network.LoginRepository

@@ -3,6 +3,7 @@ package com.justparokq.homeftp.shared.login.network
 import com.justparokq.homefpt.shared.core.network.url.UrlResolver
 import com.justparokq.homeftp.shared.common.Result
 import com.justparokq.homeftp.shared.core.setting_key.Setting
+import com.justparokq.homeftp.shared.core.setting_store.NetworkStore
 import com.justparokq.homeftp.shared.login.LoginRequest
 import com.justparokq.homeftp.shared.login.LoginResponse
 import com.justpoarokq.shared.core.base_database.api.NetworkSettingsInteractor
@@ -39,8 +40,13 @@ internal class LoginRepositoryImpl(
                 }
             }
 
-            Setting.NetworkKey.Target.Option.Dev, Setting.NetworkKey.Target.Option.Prod -> {
+            Setting.NetworkKey.Target.Option.Dev -> {
                 val baseUrl = urlResolver.getBaseUrl(isDevEnv = true)
+                loginNetworkComponent.sendLoginRequest(loginRequest, baseUrl)
+            }
+
+            Setting.NetworkKey.Target.Option.Prod -> {
+                val baseUrl = urlResolver.getBaseUrl(isDevEnv = false)
                 loginNetworkComponent.sendLoginRequest(loginRequest, baseUrl)
             }
         }

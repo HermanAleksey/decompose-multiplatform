@@ -48,6 +48,7 @@ object Dependencies {
         val Core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         val Android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         val Test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+        val Swing = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$version"
     }
 
     object Ktor {
@@ -76,6 +77,8 @@ object Dependencies {
 
         val ServerAuth = "io.ktor:ktor-server-auth:$version"
         val ServerAuthJwt = "io.ktor:ktor-server-auth-jwt:$version"
+
+        val ClientLogging = "io.ktor:ktor-client-logging:$version"
     }
 
     object FilePicker {

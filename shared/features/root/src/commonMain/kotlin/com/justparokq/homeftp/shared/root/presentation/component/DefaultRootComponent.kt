@@ -15,6 +15,7 @@ import com.justparokq.homeftp.shared.login.api.LoginComponent
 import com.justparokq.homeftp.shared.main.api.MainComponent
 import com.justparokq.homeftp.shared.navigation.acrhitecture.IInputActionDelegate
 import com.justparokq.homeftp.shared.navigation.feature.FeatureNavigator
+import com.justparokq.homeftp.shared.navigation.feature.ProjectFeature
 import com.justparokq.homeftp.shared.root.presentation.component.RootComponent.Child
 import com.justparokq.homeftp.shared.root.presentation.navigation.Config
 import com.justparokq.homeftp.shared.root.presentation.navigation.FeatureNavigatorImpl
@@ -39,6 +40,7 @@ class DefaultRootComponent(
                     object : UnauthNavigator {
                         override fun navigateToUnauthZone() {
                             featureNavigator.navigateToTheRoot()
+                            featureNavigator.replaceCurrentWith(ProjectFeature.LOGIN)
                         }
                     }
                 }

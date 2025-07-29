@@ -13,7 +13,7 @@ kotlin {
                 }
 
                 jvmMain.dependencies {
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
+                    implementation(Dependencies.Coroutines.Swing)
                 }
             }
         }
