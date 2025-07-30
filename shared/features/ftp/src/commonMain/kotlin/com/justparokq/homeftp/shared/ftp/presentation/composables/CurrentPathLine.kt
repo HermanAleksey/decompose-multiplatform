@@ -70,7 +70,8 @@ internal fun CurrentPathLine(
             modifier = Modifier.weight(1f),
             flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
         ) {
-            itemsIndexed(path.parts) { index, str ->
+            val partsToDisplay = listOf("Root") + path.parts
+            itemsIndexed(partsToDisplay) { index, str ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {

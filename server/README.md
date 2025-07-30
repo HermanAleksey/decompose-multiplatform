@@ -101,44 +101,55 @@ Invalidate a refresh token, logging the user out (the refresh token cannot be us
 
 All endpoints below require a valid JWT token in the `Authorization: Bearer <token>` header.
 
-### Get Directory Listing
+### GET `/directory`
 
-**GET** `/directory?path=...` (Prod)  
-**GET** `/test/directory?path=...` (Test)
+Requests directory content with pagination support
 
-List files and folders in a directory.
+**Query parameters:**
 
-**Query Parameters:**
+| Param      | Type   | Required          | Desciption                        |
+|------------|--------|-------------------|-----------------------------------|
+| `path`     | String | No                | Path to directory                 |
+| `page`     | Int    | No (default `0`)  | Index of the page (starts with 0) |
+| `pageSize` | Int    | No (default `30`) | Count of elements on the page     |
 
-- `path` (string, optional): Path to the directory (default: root)
-
-**Response:**
+**Response (200 OK):**
 
 ```json
-[
-  {
-    "uri": "string",
-    "name": "string",
-    "isDirectory": true
-  }
-]
+{
+  "files": [
+    {
+      "name": "image1.jpg",
+      "type": "IMAGE",
+      "size": 123456
+    },
+    {
+      "name": "subdir",
+      "type": "DIRECTORY"
+    }
+    // ...
+  ],
+  "hasNextPage": false
+}
 ```
+
+---
 
 ---
 
 ### Get Image
 
-**GET** `/image?path=...&preview=...` (Prod)  
+**GET** `/image?path=...&preview=...` (Prod)
 **GET** `/test/image?path=...&preview=...` (Test)
 
 Retrieve an image file or its preview.
 
-**Query Parameters:**
+**Query Parameters: **
 
 - `path` (string, required): Path to the image file
 - `preview` (boolean, optional): If `true`, returns a lower-quality preview
 
-**Response:**
+**Response: **
 
 - `200 OK`: Image file
 - `400 Bad Request`: If `path` is missing
@@ -165,8 +176,8 @@ POST /login
 Content-Type: application/json
 
 {
-  "username": "user",
-  "password": "pass"
+"username": "user",
+"password": "pass"
 }
 ```
 

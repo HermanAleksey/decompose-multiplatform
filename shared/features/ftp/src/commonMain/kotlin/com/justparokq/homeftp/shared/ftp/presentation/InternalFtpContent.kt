@@ -12,7 +12,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +20,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.justparokq.homeftp.shared.ftp.api.FtpExplorerComponent
 import com.justparokq.homeftp.shared.ftp.api.FtpExplorerScreenModel
 import com.justparokq.homeftp.shared.ftp.api.OnDirectoryClicked
+import com.justparokq.homeftp.shared.ftp.api.OnEndOfPageReached
 import com.justparokq.homeftp.shared.ftp.api.OnFileSystemObjectClicked
 import com.justparokq.homeftp.shared.ftp.api.OnNavigateBackClicked
 import com.justparokq.homeftp.shared.ftp.presentation.composables.FtpScreen
@@ -54,7 +54,10 @@ internal fun InternalFtpContent(
                 fsObjects = state.fsObjects,
                 onPathPartClicked = { component.processIntent(OnDirectoryClicked(it)) },
                 onFSObjectClicked = { component.processIntent(OnFileSystemObjectClicked(it)) },
-                onNavigateBackClicked = { component.processIntent(OnNavigateBackClicked) }
+                onNavigateBackClicked = { component.processIntent(OnNavigateBackClicked) },
+                onEndOfPageReached = { component.processIntent(OnEndOfPageReached) },
+                isLoadingPagination = state.paginationState.isLoadingNextPage,
+                modifier = Modifier
             )
             if (state.isLoading) {
                 Box(

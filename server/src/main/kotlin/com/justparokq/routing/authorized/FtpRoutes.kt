@@ -1,6 +1,7 @@
 package com.justparokq.routing.authorized
 
 import FtpDependencies
+import com.justparokq.homeftp.shared.ftp.PagedDirectoryResponse
 import com.justparokq.homeftp.shared.ftp.isImage
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.response.respond
@@ -36,9 +37,22 @@ internal fun Route.addFtpRoutes(ftpDependencies: FtpDependencies) {
 
     get("/directory") {
         val path = call.parameters["path"] ?: ""
-        val files = ftpDependencies.communicator.getDirectoryContent(path) ?: listOf()
-        val dtos = ftpDependencies.mapper.map(files)
+        val page = call.parameters["page"]?.toIntOrNull() ?: 0
+        val pageSize = call.parameters["pageSize"]?.toIntOrNull() ?: 30
 
-        call.respond(dtos)
+        val allFiles = ftpDependencies.communicator.getDirectoryContent(path) ?: listOf()
+        val pagedFiles = allFiles
+            .drop(page * pageSize)
+            .take(pageSize)
+
+        val hasNextPage = (page + 1) * pageSize < allFiles.size
+        val dtos = ftpDependencies.mapper.map(pagedFiles)
+
+        call.respond(
+            PagedDirectoryResponse(
+                files = dtos,
+                hasNextPage = hasNextPage
+            )
+        )
     }
 }

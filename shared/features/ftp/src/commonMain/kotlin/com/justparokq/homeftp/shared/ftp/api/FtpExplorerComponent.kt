@@ -19,7 +19,7 @@ internal data class FtpExplorerScreenModel(
     val isLoading: Boolean = true,
     val currentPath: Path = Path.Root,
     val fsObjects: List<FileSystemObject> = emptyList(),
-    val pagination: PaginationState = PaginationState(),
+    val paginationState: PaginationState = PaginationState(),
     val error: String? = null,
 ) : FtpExplorerComponentState
 
@@ -61,5 +61,7 @@ internal data class OnFloatingButtonClicked(
 internal data class OnFilesPicked(val files: List<PlatformFile>) : FtpExplorerComponentIntent
 
 internal data object OnNavigateBackClicked : FtpExplorerComponentIntent
+
+internal data object OnEndOfPageReached : FtpExplorerComponentIntent
 
 internal data object OnRefreshPulled : FtpExplorerComponentIntent
