@@ -35,7 +35,7 @@ internal class FtpCommunicationHttpClientImpl(
         return flow {
             emit(Result.Loading(true))
             // todo remove (simulate some network lag)
-            delay(1000)
+            delay(3000)
             try {
                 val result = httpClient.authorizedRequest(endpoint = "/directory") {
                     if (directoryUri.isNotEmpty()) {

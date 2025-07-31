@@ -65,3 +65,5 @@ internal data object OnNavigateBackClicked : FtpExplorerComponentIntent
 internal data object OnEndOfPageReached : FtpExplorerComponentIntent
 
 internal data object OnRefreshPulled : FtpExplorerComponentIntent
+
+internal data object OnRetryButtonClicked : FtpExplorerComponentIntent

@@ -254,10 +254,12 @@ fun AppTheme(
         else -> lightScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = baselineTypography, //AppTypography
-        content = content
-    )
+    ProvideDimens {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = baselineTypography, //AppTypography
+            content = content
+        )
+    }
 }
 

@@ -15,18 +15,19 @@ import com.justparokq.homeftp.shared.ftp.api.OnFilesPicked
 import com.justparokq.homeftp.shared.ftp.api.OnFloatingButtonClicked
 import com.justparokq.homeftp.shared.ftp.api.OnNavigateBackClicked
 import com.justparokq.homeftp.shared.ftp.api.OnRefreshPulled
+import com.justparokq.homeftp.shared.ftp.api.OnRetryButtonClicked
 import com.justparokq.homeftp.shared.ftp.api.OnScreenOpened
 import com.justparokq.homeftp.shared.ftp.api.OnSortingApplyClicked
 import com.justparokq.homeftp.shared.ftp.data.mapper.FileSystemObjectMapper
 import com.justparokq.homeftp.shared.ftp.data.network.FtpCommunicationHttpClient
 import com.justparokq.homeftp.shared.ftp.model.FileSystemObject
+import com.justparokq.homeftp.shared.ftp.model.PAGE_SIZE
 import com.justparokq.homeftp.shared.ftp.model.PaginationState
 import com.justparokq.homeftp.shared.ftp.model.Path
 import com.justparokq.homeftp.shared.navigation.acrhitecture.InitHelper
 import com.justparokq.homeftp.shared.navigation.feature.FeatureNavigator
 import com.justparokq.homeftp.shared.utils.componentCoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal class DefaultFtpExplorerComponent(
@@ -36,11 +37,6 @@ internal class DefaultFtpExplorerComponent(
     private val featureNavigator: FeatureNavigator,
     initHelper: InitHelper,
 ) : FtpExplorerComponent, ComponentContext by componentContext {
-
-    private companion object {
-        // small number for test
-        const val PAGE_SIZE = 21
-    }
 
     private val coroutineScope = componentCoroutineScope()
 
@@ -66,9 +62,10 @@ internal class DefaultFtpExplorerComponent(
             is OnFilesPicked -> Unit // TODO()
             OnSortingApplyClicked -> Unit // TODO()
             is OnFloatingButtonClicked -> Unit // TODO()
-            OnRefreshPulled -> Unit // TODO()
+            OnRefreshPulled -> loadPage()
             OnNavigateBackClicked -> onNavigateBackClicked()
             OnEndOfPageReached -> loadNextPage()
+            OnRetryButtonClicked -> loadPage()
         }
     }
 
@@ -141,37 +138,50 @@ internal class DefaultFtpExplorerComponent(
         loadDataJob = coroutineScope.launch {
             ftpHttpClient.getDirectoryContent(path.raw, currentPage, PAGE_SIZE)
                 .collect { result ->
+                    println("Collect: $result")
                     when (result) {
                         is Result.Loading -> {
-                            if (isLoadingFirstPage)
-                                _state.update {
+                            _state.update {
+                                if (isLoadingFirstPage)
                                     it.copy(
                                         isLoading = result.loading,
+                                        error = null,
+                                        paginationState = it.paginationState.copy(
+                                            error = null
+                                        )
                                     )
-                                }
-                            else _state.update {
-                                it.copy(
+                                else it.copy(
+                                    error = null,
                                     paginationState = it.paginationState.copy(
-                                        isLoadingNextPage = result.loading
+                                        isLoadingNextPage = result.loading,
+                                        error = null,
                                     )
                                 )
                             }
                         }
 
                         is Result.Error -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = false,
-                                    paginationState = it.paginationState.copy(isLoadingNextPage = false)
+                            _state.update { model ->
+                                if (isLoadingFirstPage)
+                                    model.copy(
+                                        error = result.errorMessage,
+                                        paginationState = model.paginationState.copy(
+                                            hasNextPage = false
+                                        )
+                                    )
+                                else model.copy(
+                                    paginationState = model.paginationState.copy(
+                                        error = result.errorMessage
+                                    )
                                 )
                             }
-                            println("loadNextPage error: ${result.errorMessage}")
                         }
 
                         is Result.Success -> {
                             val response = result.result
-                            val newItems =
-                                response.files.map { fileSystemObjectMapper.toFileSystemObject(it) }
+                            val newItems = response.files.map {
+                                fileSystemObjectMapper.toFileSystemObject(it)
+                            }
 
                             _state.update {
                                 val newItemsList = if (isLoadingFirstPage)

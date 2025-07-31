@@ -23,15 +23,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
+import com.justparokq.homeftp.shared.ftp.api.FtpExplorerComponentIntent
+import com.justparokq.homeftp.shared.ftp.api.OnDirectoryClicked
+import com.justparokq.homeftp.shared.ftp.api.OnNavigateBackClicked
 import com.justparokq.homeftp.shared.ftp.model.Path
+import com.justparokq.homeftp.theme.LocalElevation
 import kotlinx.coroutines.delay
 
 @Composable
 internal fun CurrentPathLine(
     path: Path,
-    onPathPartClicked: (list: Path) -> Unit,
-    onNavigateBackClicked: () -> Unit,
+    processIntent: (FtpExplorerComponentIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val listState = rememberLazyListState()
@@ -45,20 +49,24 @@ internal fun CurrentPathLine(
     }
 
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .padding(8.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
             .fillMaxWidth()
+            .shadow(
+                elevation = LocalElevation.current.medium,
+                shape = RoundedCornerShape(16.dp),
+                clip = false
+            )
             .background(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(16.dp)
-            )
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+            ),
     ) {
-        IconButton(onClick = onNavigateBackClicked) {
+        IconButton(onClick = { processIntent(OnNavigateBackClicked) }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Назад"
+                contentDescription = "Back"
             )
         }
 
@@ -78,13 +86,14 @@ internal fun CurrentPathLine(
                     Text(
                         text = str,
                         modifier = Modifier
-                            .clickable { onPathPartClicked(path.resolveTo(index)) }
+                            // -1 because we added 'root' label , so indexes
+                            .clickable { processIntent(OnDirectoryClicked(path.resolveTo(index - 1))) }
                             .padding(horizontal = 4.dp),
                         color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.bodyMedium
                     )
 
-                    if (index < path.parts.lastIndex) {
+                    if (index < partsToDisplay.lastIndex) {
                         Icon(
                             imageVector = Icons.Default.ChevronRight,
                             contentDescription = null,

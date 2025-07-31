@@ -2,7 +2,6 @@ package com.justparokq.homeftp.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -37,15 +36,40 @@ val normalDimensions: Dimensions = object : Dimensions {
         get() = 120.dp
 }
 
-private val LocalAppDimens = staticCompositionLocalOf {
+val LocalAppDimens = staticCompositionLocalOf {
     normalDimensions
+}
+
+interface Elevation {
+    val none: Dp
+    val small: Dp
+    val medium: Dp
+    val high: Dp
+}
+
+val normalElevation = object : Elevation {
+    override val none: Dp
+        get() = 0.dp
+    override val small: Dp
+        get() = 8.dp
+    override val medium: Dp
+        get() = 16.dp
+    override val high: Dp
+        get() = 22.dp
+}
+
+val LocalElevation = staticCompositionLocalOf {
+    normalElevation
 }
 
 @Composable
 fun ProvideDimens(
-    dimensions: Dimensions,
     content: @Composable () -> Unit,
 ) {
-    val dimensionSet = remember { dimensions }
-    CompositionLocalProvider(LocalAppDimens provides dimensionSet, content = content)
+    CompositionLocalProvider(
+        values = arrayOf(
+            LocalAppDimens provides normalDimensions,
+            LocalElevation provides normalElevation
+        ), content = content
+    )
 }
